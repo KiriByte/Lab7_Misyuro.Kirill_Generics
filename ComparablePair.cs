@@ -17,22 +17,13 @@ internal class ComparablePair<T, U> : IComparable<ComparablePair<T, U>>
 
     public int CompareTo(ComparablePair<T, U> pair)
     {
-        switch (CompareLex(var1, pair.var1))
+        int result = CompareLex(var1, pair.var1);
+        if (result == 0)
         {
-            case 0:
-                switch (CompareLex(var2, pair.var2))
-                {
-                    case 0: return 0;
-                    case 1: return 1;
-                    case 2: return 2;
-                }
-
-                break;
-            case 1: return 1;
-            case 2: return 2;
+            return CompareLex(var2, pair.var2);
         }
 
-        return 0;
+        return result;
     }
 
 
@@ -45,24 +36,11 @@ internal class ComparablePair<T, U> : IComparable<ComparablePair<T, U>>
         {
             if (a[i] != b[i])
             {
-                if (a[i] < b[i])
-                {
-                    return 2;
-                }
-
-                if (a[i] > b[i])
-                {
-                    return 1;
-                }
+                return a[i] < b[i] ? 2 : 1;
             }
         }
 
-        if (CompareLengthStrings(a, b) != 0)
-        {
-            return CompareLengthStrings(a, b) == 1 ? 1 : 2;
-        }
-
-        return 0;
+        return CompareLengthStrings(a, b);
     }
 
     private int CompareLengthStrings(string a, string b)
